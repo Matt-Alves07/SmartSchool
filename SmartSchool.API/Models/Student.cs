@@ -14,5 +14,5 @@ public class Student
     public string? Name { get; private set; }
     public string? LastName { get; private set; }
     public string? Phone { get; private set; }
-    public IEnumerable<StudentsDisciplines> StudentsDisciplines { get; set; }
+    public IEnumerable<StudentsDisciplines>? StudentsDisciplines { get; set; }
 }

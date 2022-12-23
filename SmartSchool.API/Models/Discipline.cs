@@ -12,7 +12,7 @@ public class Discipline
     public Guid Id { get; private set; }
     public string? Name { get; private set; }
     public Guid TeacherId { get; private set; }
-    public Teacher Teacher { get; set; }
+    public Teacher? Teacher { get; set; }
 
-    public IEnumerable<StudentsDisciplines> StudentsDisciplines { get; set; }
+    public IEnumerable<StudentsDisciplines>? StudentsDisciplines { get; set; }
 }

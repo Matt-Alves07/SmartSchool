@@ -12,5 +12,5 @@ public class Teacher
     public Guid Id { get; private set; }
     public string? Name { get; private set; }
     public string? LastName { get; private set; }
-    public IEnumerable<Discipline> Disciplines { get; set; }
+    public IEnumerable<Discipline>? Disciplines { get; set; }
 }

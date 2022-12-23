@@ -9,7 +9,7 @@ public class StudentsDisciplines
     }
 
     public Guid StudentId { get; private set; }
-    public Student Student { get; set; }
+    public Student? Student { get; set; }
     public Guid DisciplineId { get; private set; }
-    public Discipline Discipline { get; set; }
+    public Discipline? Discipline { get; set; }
 }
