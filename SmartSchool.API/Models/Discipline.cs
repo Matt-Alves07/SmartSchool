@@ -14,5 +14,5 @@ public class Discipline
     public Guid TeacherId { get; private set; }
     public Teacher Teacher { get; set; }
 
-    public IEnumerable<StudentDiscipline> StudentsDisciplines { get; set; }
+    public IEnumerable<StudentsDisciplines> StudentsDisciplines { get; set; }
 }
