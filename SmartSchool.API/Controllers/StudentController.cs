@@ -9,19 +9,18 @@ namespace SmartSchool.API.Controllers;
 [Route("[controller]")]
 public class StudentController: ControllerBase
 {
-    private readonly DBContext _context;
+    private readonly IRepository _repository;
 
-    public StudentController(DBContext context)
+    public StudentController(IRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-        var list = _context.Students?.ToList();
-
-        if (list is null)
+        var list = _repository.GetStudents(true);
+        if (list == null)
             return NoContent();
 
         return Ok(list);
@@ -30,8 +29,7 @@ public class StudentController: ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetById(Guid id)
     {
-        var student = _context.Students?.FirstOrDefault(s => s.Id == id);
-
+        var student = _repository.GetStudentById(id, true);
         if (student == null)
             return NotFound();
 
@@ -41,37 +39,38 @@ public class StudentController: ControllerBase
     [HttpPost]
     public IActionResult Post(Student student)
     {
-        _context.Add(student);
-        _context.SaveChanges();
+        _repository.Add(student);
+        if (_repository.SaveChanges())
+            return Ok(student);
 
-        return Ok(student);
+        return BadRequest("Student not registered.");
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(Guid id, Student student)
     {
-        var _student = _context.Students?.AsNoTracking().FirstOrDefault(s => s.Id == id);
-
+        var _student = _repository.GetStudentById(id);
         if (_student == null)
             return NotFound();
 
-        _context.Update(student);
-        _context.SaveChanges();
+        _repository.Update(student);
+        if(_repository.SaveChanges())
+            return Ok(student);
 
-        return Ok(student);
+        return BadRequest("Student not updated.");
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
-        var student = _context.Students?.AsNoTracking().FirstOrDefault(s => s.Id == id);
-
+        var student = _repository.GetStudentById(id);
         if (student == null)
-            return BadRequest();
+            return NotFound();
 
-        _context.Remove(student);
-        _context.SaveChanges();
+        _repository.Delete(student);
+        if (_repository.SaveChanges())
+            return NoContent();
 
-        return NoContent();
+        return BadRequest("Student not removed.");
     }
 }
